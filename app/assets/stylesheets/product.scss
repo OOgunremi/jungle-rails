@@ -87,5 +87,13 @@
       font-weight: 700;
       text-align: center;
     }
+    .buttons-tab {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      column-gap: 4em;
+
+    }
+
   }
 }
