@@ -19,9 +19,8 @@ RSpec.describe Product, type: :model do
       @product.name = nil # when name is missing
       @product.valid?
       expect(@product.errors[:name]).to  include("can't be blank")
-  
       @product.name = 'test'# when name is present
-      @product.valid? 
+      @product.valid?
       expect(@product.errors[:name]).not_to  include("can't be blank")
     end
 
@@ -43,7 +42,7 @@ RSpec.describe Product, type: :model do
       expect(@product.errors[:quantity]).to  include("can't be blank")
   
       @product.quantity = 3 # product quantity present
-      @product.valid? 
+      @product.valid?
       expect(@product.errors[:quantity]).not_to  include("can't be blank")
     end
   
@@ -55,7 +54,7 @@ RSpec.describe Product, type: :model do
       expect(@product.errors[:category]).to  include("can't be blank")
 
       @product.category = @cat # category present
-      @product.valid? 
+      @product.valid?
       expect(@product.errors[:category]).not_to  include("can't be blank")
     end
   end
