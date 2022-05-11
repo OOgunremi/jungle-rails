@@ -4,34 +4,34 @@ A mini e-commerce application built with Rails 6.1 for purposes of teaching Rail
 
 ## App Snapshots
 
-!["Screenshot of Booked Interviews"]()
+!["Screenshot of Home Page](https://github.com/OOgunremi/jungle-rails/blob/master/docs/home.png)
 
 ### Screenshot of Home Page
 
 
 
-!["Screenshot of Booking Interview Page"]()
+!["Screenshot of Homepage Page"](https://github.com/OOgunremi/jungle-rails/blob/master/docs/home2.png)
 
 ### ### Screenshot of Home Page
 
 
 
-!["Screenshot of Confirmation Page"]()
+!["Screenshot of Admin Page"](https://github.com/OOgunremi/jungle-rails/blob/master/docs/admin.png)
 
 ### Screenshot of Admin Page
 
 
-!["Screenshot of Error Message"]()
+!["Screenshot of Login"](https://github.com/OOgunremi/jungle-rails/blob/master/docs/login.png)
 
 ### Screenshot of Login Page
 
 
-!["Screenshot of Error Message"]()
+!["Screenshot of SignUp"](https://github.com/OOgunremi/jungle-rails/blob/master/docs/signup.png)
 
 ### Screenshot of Signup Page
 
 
-!["Screenshot of Error Message"]()
+!["Screenshot of About Page"](https://github.com/OOgunremi/jungle-rails/blob/master/docs/about.png)
 
 ### Screenshot of About Page
 
