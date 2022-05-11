@@ -7,11 +7,23 @@ RSpec.describe User, type: :model do
       user = User.new(
         first_name: 'abc',
         last_name: 'def',
-        email: 'abc@yahoo.com',
-        password: '123',
-        password_confirmation: '123'
+        email: 'abcd@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
       )
       expect(user).to be_valid
+    end
+    
+    it "password don't match" do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '1234'
+      )
+      user.valid?
+      expect(user.errors[:password_confirmation]).to be_present
     end
 
     it "email is missing" do
@@ -19,7 +31,7 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
       expect(user.errors[:email]).to include("can't be blank")
   
-      user.email = 'abc@yahoo.com' # valid state
+      user.email = 'abcd@yahoo.com' # valid state
       user.valid?
       expect(user.errors[:email]).not_to include("can't be blank")
     end
@@ -29,7 +41,7 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
       expect(user.errors[:first_name]).to include("can't be blank")
   
-      user.first_name = 'first_name' # valid state
+      user.first_name = 'abc' # valid state
       user.valid? 
       expect(user.errors[:first_name]).not_to include("can't be blank")
     end
@@ -39,11 +51,110 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
       expect(user.errors[:last_name]).to include("can't be blank")
   
-      user.last_name = 'last_name' # valid state
+      user.last_name = 'def' # valid state
       user.valid? 
       expect(user.errors[:last_name]).not_to include("can't be blank")
     end
     
+
+    it 'email must be unique' do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save
+    
+      user2 = User.new
+      user2.first_name = 'first_name'
+      user2.last_name = 'last_name'
+      user2.email = 'abc@yahoo.com'
+      user2.password = 'password'
+      user2.password_confirmation = 'password'
+      user2.save
+    
+      expect(user2.errors[:email].first).to eq('has already been taken')
+    end
+
+    it 'password length less than 5 characters is invalid' do
+      user = User.new
+      user.first_name = 'abc'
+      user.last_name = 'def'
+      user.email = 'abc@yahoo.com'
+      user.password = '1234'
+      user.password_confirmation = '1234'
+      expect(user).to be_invalid
+    end
+
+    it 'password length must be at-least 5 characters' do
+      user = User.new
+      user.first_name = 'abc'
+      user.last_name = 'def'
+      user.email = 'abc@yahoo.com'
+      user.password = '12345'
+      user.password_confirmation = '12345'
+      expect(user).to be_valid
+    end
+  end
+  
+  describe '.authenticate_with_credentials' do
+    it 'should pass with valid credentials' do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save
+
+      user = User.authenticate_with_credentials('abc@yahoo.com', '12345')
+      expect(user).not_to be(nil)
+    end
+
+    it 'should not pass with invalid credentials' do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save
+
+      user = User.authenticate_with_credentials('abc@yahoo.com', '123456')
+      expect(user).to be(nil)
+    end
+
+    it 'should pass even with spaces present in email' do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save
+
+      user = User.authenticate_with_credentials('   abc@yahoo.com   ', '12345')
+      expect(user).not_to be(nil)
+    end
+
+    it 'should pass even with caps present in email' do
+      user = User.new(
+        first_name: 'abc',
+        last_name: 'def',
+        email: 'abc@yahoo.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save
+
+      user = User.authenticate_with_credentials('Abc@yahoo.com', '12345')
+      expect(user).not_to be(nil)
+    end
 
     
   end
